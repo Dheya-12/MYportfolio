@@ -1,21 +1,5 @@
 'use client';
 
-/**
- * Animated Intervyn Screenshot Component
- * 
- * For Section 1: Project Overview
- * Phase 1 (0-3s): SVG outline of Intervyn UI traces
- * Phase 2 (3-6s): Outline fades, actual screenshot image appears
- * 
- * Outline structure:
- * - Outer frame
- * - Top bar
- * - Left panel
- * - Circle (AI assistant)
- * - Right panel
- * - Code box
- */
-
 import { useRef, useId } from 'react';
 import { motion, useInView } from 'framer-motion';
 import Image from 'next/image';
@@ -35,9 +19,6 @@ export default function AnimatedIntervynScreenshot({
 
   return (
     <div ref={ref} className="relative w-full aspect-[12/7]">
-      {/* ============================================
-          PHASE 1: SVG OUTLINE - TRACES UI STRUCTURE
-          ============================================ */}
       <motion.div
         className="pointer-events-none absolute inset-0"
         style={{ zIndex: 2 }}
@@ -61,7 +42,6 @@ export default function AnimatedIntervynScreenshot({
             </linearGradient>
           </defs>
 
-          {/* 1. Outer frame */}
           <motion.rect
             x="2"
             y="2"
@@ -79,7 +59,6 @@ export default function AnimatedIntervynScreenshot({
             }}
           />
 
-          {/* 2. Top bar */}
           <motion.rect
             x="20"
             y="20"
@@ -97,7 +76,6 @@ export default function AnimatedIntervynScreenshot({
             }}
           />
 
-          {/* 3. Left panel */}
           <motion.rect
             x="20"
             y="80"
@@ -115,7 +93,6 @@ export default function AnimatedIntervynScreenshot({
             }}
           />
 
-          {/* 4. Circle (AI assistant) */}
           <motion.circle
             cx="160"
             cy="270"
@@ -131,7 +108,6 @@ export default function AnimatedIntervynScreenshot({
             }}
           />
 
-          {/* 5. Right panel */}
           <motion.rect
             x="320"
             y="80"
@@ -149,7 +125,6 @@ export default function AnimatedIntervynScreenshot({
             }}
           />
 
-          {/* 6. Code box */}
           <motion.rect
             x="340"
             y="380"
@@ -169,9 +144,6 @@ export default function AnimatedIntervynScreenshot({
         </svg>
       </motion.div>
 
-      {/* ============================================
-          PHASE 2: ACTUAL SCREENSHOT IMAGE POPS IN
-          ============================================ */}
       <motion.div
         className="relative w-full h-full rounded-3xl overflow-hidden shadow-2xl"
         style={{ zIndex: 1 }}

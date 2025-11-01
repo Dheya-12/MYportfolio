@@ -1,17 +1,5 @@
 'use client';
 
-/**
- * Intervyn Project Visualizations
- * 
- * SVG outlines for 6 project sections:
- * 1. interview-mockup: Interview simulation UI
- * 2. features-grid: Feature icons grid
- * 3. tech-stack-card: (handled by AnimatedTechStackCard)
- * 4. system-diagram: Architecture flow
- * 5. growth-journey: Personal growth path
- * 6. metrics-display: Animated stat counters
- */
-
 import { useRef, useId } from 'react';
 import { motion, useInView } from 'framer-motion';
 
@@ -89,7 +77,6 @@ export default function IntervynVisualization({ type, gradient, icon }: Intervyn
             <stop offset="100%" stopColor={gradient[1]} />
           </linearGradient>
 
-          {/* Arrow marker */}
           <marker id={`arrow-${gradientId}`} markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
             <polygon points="0 0, 10 3, 0 6" fill={`url(#${gradientId})`} />
           </marker>
@@ -101,13 +88,9 @@ export default function IntervynVisualization({ type, gradient, icon }: Intervyn
   );
 }
 
-// ============================================
-// 1. INTERVIEW MOCKUP - Project Overview
-// ============================================
 function InterviewMockup({ gradientId, pathAnimation }: VisualizationWithIconProps) {
   return (
     <g>
-      {/* Phone/Device frame */}
       <motion.rect
         x="100"
         y="50"
@@ -120,7 +103,6 @@ function InterviewMockup({ gradientId, pathAnimation }: VisualizationWithIconPro
         {...pathAnimation}
       />
 
-      {/* Avatar circle */}
       <motion.circle
         cx="200"
         cy="120"
@@ -135,7 +117,6 @@ function InterviewMockup({ gradientId, pathAnimation }: VisualizationWithIconPro
         }}
       />
 
-      {/* Microphone icon */}
       <motion.circle
         cx="200"
         cy="200"
@@ -165,7 +146,6 @@ function InterviewMockup({ gradientId, pathAnimation }: VisualizationWithIconPro
         }}
       />
 
-      {/* Audio waveform */}
       <motion.path
         d="M 120 260 L 130 250 L 140 260 L 150 240 L 160 260 L 170 245 L 180 260 L 190 235 L 200 260 L 210 240 L 220 260 L 230 250 L 240 260 L 250 245 L 260 260 L 270 250 L 280 260"
         stroke={`url(#${gradientId})`}
@@ -178,7 +158,6 @@ function InterviewMockup({ gradientId, pathAnimation }: VisualizationWithIconPro
         }}
       />
 
-      {/* End Interview button */}
       <motion.rect
         x="130"
         y="290"
@@ -198,9 +177,6 @@ function InterviewMockup({ gradientId, pathAnimation }: VisualizationWithIconPro
   );
 }
 
-// ============================================
-// 2. FEATURES GRID - Key Features
-// ============================================
 function FeaturesGrid({ gradientId, pathAnimation }: VisualizationWithIconProps) {
   const features = [
     { x: 80, y: 80, icon: '🎙️' },
@@ -215,7 +191,6 @@ function FeaturesGrid({ gradientId, pathAnimation }: VisualizationWithIconProps)
     <g>
       {features.map((feature, i) => (
         <g key={i}>
-          {/* Feature box */}
           <motion.rect
             x={feature.x}
             y={feature.y}
@@ -231,8 +206,7 @@ function FeaturesGrid({ gradientId, pathAnimation }: VisualizationWithIconProps)
               delay: i * 0.15,
             }}
           />
-          
-          {/* Icon (as text) */}
+
           <text
             x={feature.x + 40}
             y={feature.y + 50}
@@ -244,7 +218,6 @@ function FeaturesGrid({ gradientId, pathAnimation }: VisualizationWithIconProps)
         </g>
       ))}
 
-      {/* Connecting lines */}
       <motion.path
         d="M 160 120 L 220 120"
         stroke={`url(#${gradientId})`}
@@ -285,13 +258,9 @@ function FeaturesGrid({ gradientId, pathAnimation }: VisualizationWithIconProps)
   );
 }
 
-// ============================================
-// 4. SYSTEM DIAGRAM - Architecture
-// ============================================
 function SystemDiagram({ gradientId, pathAnimation }: VisualizationComponentProps) {
   return (
     <g>
-      {/* User */}
       <motion.circle
         cx="80"
         cy="200"
@@ -303,7 +272,6 @@ function SystemDiagram({ gradientId, pathAnimation }: VisualizationComponentProp
       />
       <text x="80" y="260" textAnchor="middle" className="text-xs fill-gray-400">User</text>
 
-      {/* WebRTC */}
       <motion.rect
         x="150"
         y="170"
@@ -321,7 +289,6 @@ function SystemDiagram({ gradientId, pathAnimation }: VisualizationComponentProp
       />
       <text x="180" y="205" textAnchor="middle" className="text-xs fill-gray-400">WebRTC</text>
 
-      {/* AI Pipeline */}
       <motion.circle
         cx="270"
         cy="200"
@@ -337,7 +304,6 @@ function SystemDiagram({ gradientId, pathAnimation }: VisualizationComponentProp
       />
       <text x="270" y="260" textAnchor="middle" className="text-xs fill-gray-400">AI</text>
 
-      {/* Supabase */}
       <motion.rect
         x="240"
         y="100"
@@ -355,7 +321,6 @@ function SystemDiagram({ gradientId, pathAnimation }: VisualizationComponentProp
       />
       <text x="270" y="130" textAnchor="middle" className="text-xs fill-gray-400">Supabase</text>
 
-      {/* AWS */}
       <motion.rect
         x="240"
         y="270"
@@ -373,7 +338,6 @@ function SystemDiagram({ gradientId, pathAnimation }: VisualizationComponentProp
       />
       <text x="270" y="300" textAnchor="middle" className="text-xs fill-gray-400">AWS</text>
 
-      {/* Arrows */}
       <motion.path
         d="M 115 200 L 150 200"
         stroke={`url(#${gradientId})`}
@@ -422,13 +386,9 @@ function SystemDiagram({ gradientId, pathAnimation }: VisualizationComponentProp
   );
 }
 
-// ============================================
-// 5. GROWTH JOURNEY - Personal Impact
-// ============================================
 function GrowthJourney({ gradientId, pathAnimation }: VisualizationWithIconProps) {
   return (
     <g>
-      {/* Path/Journey line */}
       <motion.path
         d="M 80 320 Q 150 250, 200 200 T 320 80"
         stroke={`url(#${gradientId})`}
@@ -437,7 +397,6 @@ function GrowthJourney({ gradientId, pathAnimation }: VisualizationWithIconProps
         {...pathAnimation}
       />
 
-      {/* Milestones */}
       {[
         { x: 80, y: 320, label: 'Start' },
         { x: 150, y: 250, label: 'Learn' },
@@ -470,7 +429,6 @@ function GrowthJourney({ gradientId, pathAnimation }: VisualizationWithIconProps
         </g>
       ))}
 
-      {/* Upward arrow */}
       <motion.path
         d="M 315 90 L 320 80 L 325 90"
         stroke={`url(#${gradientId})`}
@@ -486,9 +444,6 @@ function GrowthJourney({ gradientId, pathAnimation }: VisualizationWithIconProps
   );
 }
 
-// ============================================
-// 6. METRICS DISPLAY - Results
-// ============================================
 function MetricsDisplay({ gradientId, pathAnimation }: VisualizationWithIconProps) {
   const metrics = [
     { x: 100, y: 100, size: 50 },
@@ -502,7 +457,6 @@ function MetricsDisplay({ gradientId, pathAnimation }: VisualizationWithIconProp
     <g>
       {metrics.map((metric, i) => (
         <g key={i}>
-          {/* Metric box */}
           <motion.rect
             x={metric.x - metric.size}
             y={metric.y - metric.size}
@@ -519,7 +473,6 @@ function MetricsDisplay({ gradientId, pathAnimation }: VisualizationWithIconProp
             }}
           />
 
-          {/* Animated counter effect (pulsing circle) */}
           <motion.circle
             cx={metric.x}
             cy={metric.y}
@@ -544,7 +497,6 @@ function MetricsDisplay({ gradientId, pathAnimation }: VisualizationWithIconProp
         </g>
       ))}
 
-      {/* Connecting lines between metrics */}
       <motion.path
         d="M 150 100 L 250 100"
         stroke={`url(#${gradientId})`}
@@ -573,9 +525,6 @@ function MetricsDisplay({ gradientId, pathAnimation }: VisualizationWithIconProp
   );
 }
 
-// ============================================
-// DEFAULT PLACEHOLDER
-// ============================================
 function DefaultPlaceholder({ icon, gradient }: DefaultPlaceholderProps) {
   return (
     <div

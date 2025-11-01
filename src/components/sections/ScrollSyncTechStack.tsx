@@ -1,17 +1,5 @@
 'use client';
 
-/**
- * Scroll-Synchronized Intervyn Project Showcase
- * 
- * 6 sections that tell the complete Intervyn story:
- * 1. Project Overview (the hook)
- * 2. Key Features
- * 3. Tech Stack (with animated pill card)
- * 4. Architecture
- * 5. Personal Impact
- * 6. Results/Metrics
- */
-
 import { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import AnimatedTechStackCard from '@/components/ui/AnimatedTechStackCard';
@@ -20,7 +8,6 @@ import AnimatedFeatureHub from '@/components/ui/AnimatedFeatureHub';
 import AnimatedArchitecturePipeline from '@/components/ui/AnimatedArchitecturePipeline';
 import TechVisualization from '@/components/ui/TechVisualization';
 
-// Type definitions
 type Feature = { icon: string; text: string };
 type Metric = { metric: string; label: string };
 type TechLayers = { [key: string]: string };
@@ -36,7 +23,6 @@ interface ProjectSection {
   gradient: [string, string];
 }
 
-// Project sections data
 const PROJECT_SECTIONS: ProjectSection[] = [
   {
     id: 'overview',
@@ -116,20 +102,17 @@ export default function ScrollSyncTechStack() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
 
-  // Track scroll progress
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ['start start', 'end end'],
   });
 
-  // Map scroll to section index (6 sections)
   const contentIndex = useTransform(
     scrollYProgress,
     [0, 0.16, 0.33, 0.50, 0.66, 0.83, 1],
     [0, 1, 2, 3, 4, 5, 5]
   );
 
-  // Update active index
   useEffect(() => {
     return contentIndex.on('change', (latest) => {
       setActiveIndex(Math.round(latest));
@@ -147,7 +130,6 @@ export default function ScrollSyncTechStack() {
         background: 'linear-gradient(to bottom, rgba(255, 255, 255, 1) 0%, rgba(249, 250, 251, 1) 50%, rgba(255, 255, 255, 1) 100%)',
       }}
     >
-      {/* Animated gradient orbs for visual interest */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div
           className="absolute top-20 right-20 w-96 h-96 rounded-full opacity-20 blur-3xl"
@@ -169,15 +151,11 @@ export default function ScrollSyncTechStack() {
         />
       </div>
 
-      {/* Sticky container */}
       <div className="sticky top-0 h-screen flex items-center px-8 py-20">
         <div className="max-w-[1400px] mx-auto w-full">
 
           <div className="grid md:grid-cols-2 gap-16 items-center">
-            
-            {/* ============================================
-                LEFT PANEL - CONTENT WITH GLASS CARD
-                ============================================ */}
+
             <motion.div
               key={`content-${activeSection.id}`}
               initial={{ opacity: 0 }}
@@ -188,7 +166,6 @@ export default function ScrollSyncTechStack() {
               }}
               className="relative"
             >
-              {/* Glass morphism card */}
               <div className="relative backdrop-blur-sm bg-white/60 border border-white/60 rounded-3xl p-10 shadow-2xl">
                 {/* Subtle glow effect */}
                 <div
@@ -199,7 +176,6 @@ export default function ScrollSyncTechStack() {
                 />
 
                 <div className="relative space-y-6">
-              {/* Subtitle */}
               <motion.p
                 className="text-sm font-semibold uppercase tracking-wider"
                 style={{
@@ -214,7 +190,6 @@ export default function ScrollSyncTechStack() {
                 {activeSection.subtitle}
               </motion.p>
 
-              {/* Icon */}
               <motion.div
                 className="text-6xl"
                 initial={{ scale: 0.8, opacity: 0 }}
@@ -224,7 +199,6 @@ export default function ScrollSyncTechStack() {
                 {activeSection.icon}
               </motion.div>
 
-              {/* Title */}
               <motion.h3
                 className="text-5xl font-bold text-gray-900"
                 initial={{ opacity: 0, y: 20 }}
@@ -234,7 +208,6 @@ export default function ScrollSyncTechStack() {
                 {activeSection.title}
               </motion.h3>
 
-              {/* Content - Different rendering based on section */}
               <motion.div
                 className="text-xl text-gray-600 leading-relaxed space-y-4"
                 initial={{ opacity: 0, y: 20 }}
@@ -244,7 +217,6 @@ export default function ScrollSyncTechStack() {
                 {renderContent(activeSection)}
               </motion.div>
 
-              {/* Progress indicator */}
               <motion.div
                 className="flex gap-2 pt-8"
                 initial={{ opacity: 0 }}
@@ -269,9 +241,6 @@ export default function ScrollSyncTechStack() {
               </div>
             </motion.div>
 
-            {/* ============================================
-                RIGHT PANEL - VISUALIZATION
-                ============================================ */}
             <motion.div
               key={`visualization-${activeSection.id}`}
               initial={{ opacity: 0, scale: 0.95 }}
@@ -289,7 +258,6 @@ export default function ScrollSyncTechStack() {
         </div>
       </div>
 
-      {/* Progress indicator with glass morphism */}
       <motion.div
         className="fixed bottom-8 right-8 z-50"
         initial={{ opacity: 0, y: 20 }}
@@ -297,14 +265,12 @@ export default function ScrollSyncTechStack() {
         transition={{ delay: 0.5 }}
       >
         <div className="relative">
-          {/* Glow effect */}
           <div
             className="absolute inset-0 blur-lg opacity-60 rounded-full"
             style={{
               background: `linear-gradient(135deg, ${PROJECT_SECTIONS[activeIndex].gradient[0]}, ${PROJECT_SECTIONS[activeIndex].gradient[1]})`,
             }}
           />
-          {/* Glass card */}
           <div className="relative backdrop-blur-md bg-white/80 border border-white/60 rounded-full px-6 py-3 shadow-2xl">
             <div className="flex items-center gap-3">
               <span
@@ -327,12 +293,7 @@ export default function ScrollSyncTechStack() {
   );
 }
 
-// ============================================
-// CONTENT RENDERERS
-// ============================================
-
 function renderContent(section: ProjectSection) {
-  // Section 2: Features (array with icons)
   if (Array.isArray(section.content) && section.content[0] && 'icon' in section.content[0]) {
     return (
       <div className="space-y-3">
@@ -352,7 +313,6 @@ function renderContent(section: ProjectSection) {
     );
   }
 
-  // Section 3: Tech Stack (object with layers)
   if (typeof section.content === 'object' && !Array.isArray(section.content) && 'frontend' in section.content) {
     return (
       <div className="space-y-4">
@@ -373,7 +333,6 @@ function renderContent(section: ProjectSection) {
     );
   }
 
-  // Section 6: Metrics (array with metric/label)
   if (Array.isArray(section.content) && section.content[0] && 'metric' in section.content[0]) {
     return (
       <div className="grid grid-cols-2 gap-6">
@@ -402,16 +361,10 @@ function renderContent(section: ProjectSection) {
     );
   }
 
-  // Default: Plain text (Sections 1, 4, 5)
   return <p>{section.content as string}</p>;
 }
 
-// ============================================
-// VISUALIZATION RENDERERS
-// ============================================
-
 function renderVisualization(section: ProjectSection) {
-  // Section 1: Project Overview - Use AnimatedTreeVisualization
   if (section.visualization === 'interview-mockup') {
     return (
       <AnimatedTreeVisualization
@@ -420,7 +373,6 @@ function renderVisualization(section: ProjectSection) {
     );
   }
 
-  // Section 2: Key Features - Use AnimatedFeatureHub
   if (section.visualization === 'features-grid') {
     return (
       <AnimatedFeatureHub
@@ -429,7 +381,6 @@ function renderVisualization(section: ProjectSection) {
     );
   }
 
-  // Section 3: Tech Stack - Use the AnimatedTechStackCard!
   if (section.visualization === 'tech-stack-card') {
     return (
       <AnimatedTechStackCard
@@ -458,7 +409,6 @@ function renderVisualization(section: ProjectSection) {
     );
   }
 
-  // Section 4: Architecture - Use AnimatedArchitecturePipeline
   if (section.visualization === 'system-diagram') {
     return (
       <AnimatedArchitecturePipeline
@@ -467,7 +417,6 @@ function renderVisualization(section: ProjectSection) {
     );
   }
 
-  // All other sections: Use TechVisualization
   return (
     <TechVisualization
       type={section.visualization}

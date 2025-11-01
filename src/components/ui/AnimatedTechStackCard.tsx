@@ -1,15 +1,5 @@
 'use client';
 
-/**
- * Animated Tech Stack Card Component
- * 
- * Traces outer card and inner pill shapes for tech stack display
- * Animation sequence matches codebase standards:
- * - 3.0s SVG trace (all paths simultaneously)
- * - 3.0s card pop
- * - Content fade in
- */
-
 import { useRef, useId } from 'react';
 import { motion, useInView } from 'framer-motion';
 
@@ -19,7 +9,7 @@ export interface AnimatedTechStackCardProps {
   gradientTo?: string;
   delay?: number;
   className?: string;
-  techCount?: number; // Number of tech pills to trace
+  techCount?: number;
 }
 
 export default function AnimatedTechStackCard({
@@ -36,9 +26,6 @@ export default function AnimatedTechStackCard({
 
   return (
     <div ref={ref} className={`relative ${className}`}>
-      {/* ============================================
-          SVG OUTLINES - FADE OUT AT 3.0s
-          ============================================ */}
       <motion.div
         className="pointer-events-none absolute inset-0 h-full w-full"
         style={{ zIndex: 2 }}
@@ -61,7 +48,6 @@ export default function AnimatedTechStackCard({
             </linearGradient>
           </defs>
 
-          {/* OUTER CARD OUTLINE */}
           <motion.rect
             x="2"
             y="2"
@@ -82,7 +68,6 @@ export default function AnimatedTechStackCard({
             }}
           />
 
-          {/* HEADER BOX - "Built With" */}
           <motion.rect
             x="10%"
             y="8%"
@@ -101,13 +86,12 @@ export default function AnimatedTechStackCard({
             }}
           />
 
-          {/* TECH PILLS - Calculate positions dynamically */}
           {Array.from({ length: techCount }).map((_, i) => {
-            const startY = 20; // Start after header (percentage)
-            const pillHeight = 9; // Height as percentage
-            const gap = 2; // Gap as percentage
+            const startY = 20;
+            const pillHeight = 9;
+            const gap = 2;
             const yPosition = startY + (i * (pillHeight + gap));
-            
+
             return (
               <motion.rect
                 key={i}
@@ -132,9 +116,6 @@ export default function AnimatedTechStackCard({
         </svg>
       </motion.div>
 
-      {/* ============================================
-          CARD CONTAINER - POPS SLOWLY
-          ============================================ */}
       <motion.div
         className="relative overflow-hidden rounded-3xl bg-white shadow-2xl"
         style={{ zIndex: 1 }}
@@ -150,7 +131,6 @@ export default function AnimatedTechStackCard({
           ease: 'easeOut',
         }}
       >
-        {/* CONTENT */}
         <motion.div
           className="relative z-10"
           initial={{ opacity: 0 }}

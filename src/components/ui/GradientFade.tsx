@@ -1,64 +1,23 @@
 'use client';
 
-/**
- * Gradient Fade Component
- *
- * Creates smooth gradient fades between sections
- * Alternative to wave dividers for a more subtle transition
- *
- * Use this when you want:
- * - Subtle, minimal transitions
- * - No visual dividers
- * - Pure gradient blending
- */
-
 import { motion } from 'framer-motion';
 
 export interface GradientFadeProps {
-  /** Starting color (usually transparent or section color) */
   fromColor?: string;
 
-  /** Ending color (usually the next section's color) */
   toColor?: string;
 
-  /** Height of the fade (in pixels) */
   height?: number;
 
-  /** Direction of the fade */
   direction?: 'to-bottom' | 'to-top' | 'to-right' | 'to-left';
 
-  /** Enable fade-in animation */
   animated?: boolean;
 
-  /** Custom className */
   className?: string;
 
-  /** Position (relative to parent) */
   position?: 'top' | 'bottom';
 }
 
-/**
- * GradientFade Component
- *
- * Creates a smooth linear gradient transition
- *
- * @example
- * ```tsx
- * // Fade from transparent gradient to white
- * <GradientFade
- *   fromColor="rgba(255, 255, 255, 0)"
- *   toColor="rgba(255, 255, 255, 1)"
- *   height={200}
- * />
- *
- * // Animated fade
- * <GradientFade
- *   fromColor="transparent"
- *   toColor="#ffffff"
- *   animated
- * />
- * ```
- */
 export default function GradientFade({
   fromColor = 'rgba(255, 255, 255, 0)',
   toColor = 'rgba(255, 255, 255, 1)',
@@ -93,15 +52,6 @@ export default function GradientFade({
   );
 }
 
-/**
- * ============================================
- * PRESET VARIANTS
- * ============================================
- */
-
-/**
- * Fade from transparent to white
- */
 export function FadeToWhite(props: Partial<GradientFadeProps>) {
   return (
     <GradientFade
@@ -112,9 +62,6 @@ export function FadeToWhite(props: Partial<GradientFadeProps>) {
   );
 }
 
-/**
- * Fade from transparent to black
- */
 export function FadeToBlack(props: Partial<GradientFadeProps>) {
   return (
     <GradientFade
@@ -125,16 +72,10 @@ export function FadeToBlack(props: Partial<GradientFadeProps>) {
   );
 }
 
-/**
- * Subtle fade (smaller height)
- */
 export function SubtleFade(props: Partial<GradientFadeProps>) {
   return <GradientFade {...props} height={100} />;
 }
 
-/**
- * Dramatic fade (larger height)
- */
 export function DramaticFade(props: Partial<GradientFadeProps>) {
   return <GradientFade {...props} height={300} />;
 }

@@ -1,15 +1,5 @@
 'use client';
 
-/**
- * Animated Architecture Pipeline Visualization
- * 
- * For Section 4: Architecture (How It Works)
- * Phase 1 (0-3s): SVG outline of pipeline traces
- * Phase 2 (3-6s): Outline fades, simple diagram with icons/text appears
- * 
- * Simple, clean diagram matching the architecture overview
- */
-
 import { useRef, useId } from 'react';
 import { motion, useInView } from 'framer-motion';
 
@@ -28,9 +18,6 @@ export default function AnimatedArchitecturePipeline({
 
   return (
     <div ref={ref} className="relative w-full aspect-[16/9]">
-      {/* ============================================
-          PHASE 1: SVG OUTLINE - TRACES PIPELINE
-          ============================================ */}
       <motion.div
         className="pointer-events-none absolute inset-0"
         style={{ zIndex: 2 }}
@@ -54,9 +41,6 @@ export default function AnimatedArchitecturePipeline({
             </linearGradient>
           </defs>
 
-          {/* Main flow boxes */}
-          
-          {/* Whisper box */}
           <motion.rect
             x="380"
             y="220"
@@ -74,7 +58,6 @@ export default function AnimatedArchitecturePipeline({
             }}
           />
 
-          {/* OpenAI LLM box */}
           <motion.rect
             x="630"
             y="220"
@@ -92,7 +75,6 @@ export default function AnimatedArchitecturePipeline({
             }}
           />
 
-          {/* TTS box */}
           <motion.rect
             x="880"
             y="220"
@@ -110,7 +92,6 @@ export default function AnimatedArchitecturePipeline({
             }}
           />
 
-          {/* Horizontal arrows */}
           <motion.path
             d="M 290 280 L 380 280"
             stroke={`url(#${gradientId})`}
@@ -160,7 +141,6 @@ export default function AnimatedArchitecturePipeline({
             }}
           />
 
-          {/* Bottom services circles */}
           <motion.circle
             cx="470"
             cy="530"
@@ -204,7 +184,6 @@ export default function AnimatedArchitecturePipeline({
             }}
           />
 
-          {/* Vertical connecting lines */}
           <motion.path
             d="M 470 340 L 470 470"
             stroke={`url(#${gradientId})`}
@@ -239,7 +218,6 @@ export default function AnimatedArchitecturePipeline({
             }}
           />
 
-          {/* Arrow marker */}
           <defs>
             <marker
               id={`arrow-${gradientId}`}
@@ -255,9 +233,6 @@ export default function AnimatedArchitecturePipeline({
         </svg>
       </motion.div>
 
-      {/* ============================================
-          PHASE 2: SIMPLE DIAGRAM WITH TEXT
-          ============================================ */}
       <motion.div
         className="relative w-full h-full bg-white"
         style={{ zIndex: 1 }}
@@ -270,81 +245,63 @@ export default function AnimatedArchitecturePipeline({
         }}
       >
         <svg className="w-full h-full" viewBox="0 0 1400 800">
-          {/* Title */}
           <text x="700" y="80" textAnchor="middle" fontSize="48" fontWeight="600" fill="#1f2937">
             How Intervyn's Voice-to-Voice Pipeline Works
           </text>
 
-          {/* WebRTC Audio Stream label */}
           <text x="700" y="180" textAnchor="middle" fontSize="32" fontWeight="500" fill="#374151">
             WebRTC Audio Stream
           </text>
 
-          {/* User Microphone (left) */}
           <text x="200" y="260" textAnchor="middle" fontSize="64">🎙️</text>
           <text x="200" y="320" textAnchor="middle" fontSize="20" fontWeight="500" fill="#374151">User</text>
           <text x="200" y="345" textAnchor="middle" fontSize="20" fontWeight="500" fill="#374151">Microphone</text>
 
-          {/* Arrow */}
           <line x1="290" y1="280" x2="380" y2="280" stroke="#374151" strokeWidth="3" />
           <polygon points="380,275 390,280 380,285" fill="#374151" />
 
-          {/* Whisper box */}
           <rect x="380" y="220" width="180" height="120" rx="20" fill="none" stroke="#d1d5db" strokeWidth="2" />
           <text x="470" y="270" textAnchor="middle" fontSize="48">💻</text>
           <text x="470" y="305" textAnchor="middle" fontSize="20" fontWeight="600" fill="#1f2937">Whisper</text>
           <text x="470" y="325" textAnchor="middle" fontSize="16" fill="#6b7280">(Speech-to-Text)</text>
 
-          {/* Arrow */}
           <line x1="560" y1="280" x2="630" y2="280" stroke="#374151" strokeWidth="3" />
           <polygon points="630,275 640,280 630,285" fill="#374151" />
 
-          {/* OpenAI LLM box */}
           <rect x="630" y="220" width="180" height="120" rx="20" fill="none" stroke="#d1d5db" strokeWidth="2" />
           <text x="720" y="275" textAnchor="middle" fontSize="32" fontWeight="600" fill="#1f2937">OpenAI</text>
           <text x="720" y="305" textAnchor="middle" fontSize="20" fontWeight="600" fill="#1f2937">LLM</text>
 
-          {/* Arrow */}
           <line x1="810" y1="280" x2="880" y2="280" stroke="#374151" strokeWidth="3" />
           <polygon points="880,275 890,280 880,285" fill="#374151" />
 
-          {/* Text-to-Speech box */}
           <rect x="880" y="220" width="180" height="120" rx="20" fill="none" stroke="#d1d5db" strokeWidth="2" />
           <text x="970" y="270" textAnchor="middle" fontSize="48">🔊</text>
           <text x="970" y="305" textAnchor="middle" fontSize="18" fontWeight="600" fill="#1f2937">Text-to-</text>
           <text x="970" y="325" textAnchor="middle" fontSize="18" fontWeight="600" fill="#1f2937">Speech</text>
 
-          {/* Arrow */}
           <line x1="1060" y1="280" x2="1130" y2="280" stroke="#374151" strokeWidth="3" />
           <polygon points="1130,275 1140,280 1130,285" fill="#374151" />
 
-          {/* User Headphones (right) */}
           <text x="1200" y="260" textAnchor="middle" fontSize="64">🎧</text>
           <text x="1200" y="320" textAnchor="middle" fontSize="20" fontWeight="500" fill="#374151">User</text>
           <text x="1200" y="345" textAnchor="middle" fontSize="20" fontWeight="500" fill="#374151">Audio Output</text>
 
-          {/* Vertical connecting lines */}
           <line x1="470" y1="340" x2="470" y2="470" stroke="#374151" strokeWidth="2" />
           <line x1="720" y1="340" x2="720" y2="470" stroke="#374151" strokeWidth="2" />
           <line x1="970" y1="340" x2="970" y2="470" stroke="#374151" strokeWidth="2" />
 
-          {/* Connecting bracket */}
           <path d="M 420 400 L 420 430 L 1020 430 L 1020 400" stroke="#374151" strokeWidth="2" fill="none" />
           <line x1="720" y1="430" x2="720" y2="470" stroke="#374151" strokeWidth="2" />
 
-          {/* Bottom services */}
-          
-          {/* Supabase */}
           <circle cx="470" cy="530" r="60" fill="none" stroke="#d1d5db" strokeWidth="2" />
           <text x="470" y="540" textAnchor="middle" fontSize="40">💾</text>
           <text x="470" y="620" textAnchor="middle" fontSize="24" fontWeight="600" fill="#1f2937">Supabase</text>
 
-          {/* AWS */}
           <circle cx="720" cy="530" r="60" fill="none" stroke="#d1d5db" strokeWidth="2" />
           <text x="720" y="545" textAnchor="middle" fontSize="32" fontWeight="700" fill="#1f2937">aws</text>
           <text x="720" y="620" textAnchor="middle" fontSize="24" fontWeight="600" fill="#1f2937">AWS</text>
 
-          {/* AWS Cloud */}
           <circle cx="970" cy="530" r="60" fill="none" stroke="#d1d5db" strokeWidth="2" />
           <text x="970" y="540" textAnchor="middle" fontSize="40">☁️</text>
           <text x="970" y="620" textAnchor="middle" fontSize="24" fontWeight="600" fill="#1f2937">AWS Cloud</text>

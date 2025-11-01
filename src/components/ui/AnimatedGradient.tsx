@@ -1,68 +1,19 @@
 'use client';
 
-/**
- * Animated Gradient Component
- * 
- * React wrapper for the WebGL gradient renderer
- * Creates Stripe-style animated gradient background
- */
-
 import { useEffect, useRef, useState } from 'react';
 import { GradientRenderer, createStripeGradient } from '@/lib/webgl/gradient-renderer';
 import type { GradientConfig } from '@/lib/webgl/types';
 
-/**
- * Component props
- */
 export interface AnimatedGradientProps {
-  /** Custom gradient configuration (optional) */
   config?: Partial<GradientConfig>;
-  
-  /** CSS class name for the canvas */
   className?: string;
-  
-  /** Whether to start animation automatically (default: true) */
   autoStart?: boolean;
-  
-  /** Z-index for the canvas (default: -1 for background) */
   zIndex?: number;
-  
-  /** Opacity (default: 1) */
   opacity?: number;
-  
-  /** Callback when renderer initializes */
   onInit?: (renderer: GradientRenderer) => void;
-  
-  /** Callback when renderer fails to initialize */
   onError?: (error: Error) => void;
 }
 
-/**
- * AnimatedGradient Component
- * 
- * Renders a full-screen Stripe-style animated gradient
- * Perfect for hero sections, backgrounds, and landing pages
- * 
- * @example
- * ```tsx
- * // Default Stripe gradient
- * <AnimatedGradient />
- * 
- * // Custom colors
- * <AnimatedGradient 
- *   config={{ 
- *     colors: ['#ff0000', '#00ff00', '#0000ff'] 
- *   }} 
- * />
- * 
- * // With custom styling
- * <AnimatedGradient 
- *   className="rounded-lg" 
- *   opacity={0.8}
- *   zIndex={0}
- * />
- * ```
- */
 export default function AnimatedGradient({
   config,
   className = '',
@@ -77,9 +28,6 @@ export default function AnimatedGradient({
   const [isInitialized, setIsInitialized] = useState(false);
   const [hasError, setHasError] = useState(false);
 
-  /**
-   * Initialize the gradient renderer
-   */
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) {
@@ -87,7 +35,6 @@ export default function AnimatedGradient({
       return;
     }
 
-    // Ensure canvas is mounted in DOM
     if (!canvas.isConnected) {
       console.warn('⚠️ Canvas not connected to DOM yet');
       return;
@@ -96,15 +43,12 @@ export default function AnimatedGradient({
     try {
       console.log('🎨 Initializing AnimatedGradient component...');
 
-      // Create renderer
       const renderer = createStripeGradient(canvas);
 
-      // Apply custom config if provided
       if (config) {
         renderer.updateConfig(config);
       }
 
-      // Initialize WebGL
       const success = renderer.initialize();
 
       if (!success) {
@@ -113,16 +57,13 @@ export default function AnimatedGradient({
         return;
       }
 
-      // Store renderer reference
       rendererRef.current = renderer;
       setIsInitialized(true);
 
-      // Start animation if autoStart is enabled
       if (autoStart) {
         renderer.start();
       }
 
-      // Call onInit callback
       if (onInit) {
         onInit(renderer);
       }
@@ -137,7 +78,6 @@ export default function AnimatedGradient({
       }
     }
 
-    // Cleanup on unmount
     return () => {
       if (rendererRef.current) {
         console.log('🧹 Cleaning up AnimatedGradient...');
@@ -145,21 +85,14 @@ export default function AnimatedGradient({
         rendererRef.current = null;
       }
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); // Only run once on mount - initialization should not re-run
+  }, []);
 
-  /**
-   * Update config when it changes
-   */
   useEffect(() => {
     if (rendererRef.current && config) {
       rendererRef.current.updateConfig(config);
     }
   }, [config]);
 
-  /**
-   * Handle window resize
-   */
   useEffect(() => {
     if (!rendererRef.current) return;
 
@@ -169,10 +102,8 @@ export default function AnimatedGradient({
       }
     };
 
-    // Initial resize
     handleResize();
 
-    // Listen for window resize
     window.addEventListener('resize', handleResize);
 
     return () => {
@@ -180,9 +111,6 @@ export default function AnimatedGradient({
     };
   }, [isInitialized]);
 
-  /**
-   * Handle visibility change (pause when tab is hidden)
-   */
   useEffect(() => {
     if (!rendererRef.current || !autoStart) return;
 
@@ -190,12 +118,10 @@ export default function AnimatedGradient({
       if (!rendererRef.current) return;
 
       if (document.hidden) {
-        // Pause animation when tab is hidden (save CPU/battery)
         if (rendererRef.current.isRunning()) {
           rendererRef.current.stop();
         }
       } else {
-        // Resume animation when tab is visible
         if (!rendererRef.current.isRunning()) {
           rendererRef.current.start();
         }
@@ -221,11 +147,10 @@ export default function AnimatedGradient({
         height: '100%',
         zIndex,
         opacity,
-        pointerEvents: 'none', // Allow clicks to pass through
+        pointerEvents: 'none',
       }}
-      aria-hidden="true" // Decorative element
+      aria-hidden="true"
     >
-      {/* Fallback content for browsers without canvas support */}
       {hasError && (
         <div
           style={{
@@ -244,97 +169,76 @@ export default function AnimatedGradient({
   );
 }
 
-/**
- * ============================================
- * PRESET COMPONENTS
- * ============================================
- */
-
-/**
- * Stripe-style gradient (default colors)
- */
 export function StripeGradient(props: Omit<AnimatedGradientProps, 'config'>) {
   return <AnimatedGradient {...props} />;
 }
 
-/**
- * Dark theme gradient
- */
 export function DarkGradient(props: Omit<AnimatedGradientProps, 'config'>) {
   return (
     <AnimatedGradient
       {...props}
       config={{
         colors: [
-          '#1e2635', // Midnight blue
-          '#4316d3', // Deep purple
-          '#7a3cff', // Violet
-          '#3b26ff', // Intense blue
-          '#13ffe3', // Cyan
-          '#00cfff', // Aqua
+          '#1e2635',
+          '#4316d3',
+          '#7a3cff',
+          '#3b26ff',
+          '#13ffe3',
+          '#00cfff',
         ],
       }}
     />
   );
 }
 
-/**
- * Warm gradient
- */
 export function WarmGradient(props: Omit<AnimatedGradientProps, 'config'>) {
   return (
     <AnimatedGradient
       {...props}
       config={{
         colors: [
-          '#ff6b6b', // Red
-          '#ff8e53', // Orange
-          '#ffd93d', // Yellow
-          '#ff6bcb', // Pink
-          '#c44569', // Deep pink
-          '#f8b500', // Gold
+          '#ff6b6b',
+          '#ff8e53',
+          '#ffd93d',
+          '#ff6bcb',
+          '#c44569',
+          '#f8b500',
         ],
       }}
     />
   );
 }
 
-/**
- * Cool gradient
- */
 export function CoolGradient(props: Omit<AnimatedGradientProps, 'config'>) {
   return (
     <AnimatedGradient
       {...props}
       config={{
         colors: [
-          '#13ffe3', // Cyan
-          '#00cfff', // Aqua
-          '#4facfe', // Blue
-          '#00f2fe', // Light cyan
-          '#43e97b', // Green
-          '#38f9d7', // Turquoise
+          '#13ffe3',
+          '#00cfff',
+          '#4facfe',
+          '#00f2fe',
+          '#43e97b',
+          '#38f9d7',
         ],
       }}
     />
   );
 }
 
-/**
- * Sunset gradient
- */
 export function SunsetGradient(props: Omit<AnimatedGradientProps, 'config'>) {
   return (
     <AnimatedGradient
       {...props}
       config={{
         colors: [
-          '#fa709a', // Pink
-          '#fee140', // Yellow
-          '#ff6a00', // Orange
-          '#ee0979', // Magenta
-          '#ff512f', // Red-orange
-          '#feca57', // Gold
+          '#fa709a',
+          '#fee140',
+          '#ff6a00',
+          '#ee0979',
+          '#ff512f',
+          '#feca57',
         ],
       }}
     />

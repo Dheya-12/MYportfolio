@@ -10,13 +10,12 @@ export default function ProjectSection() {
       className="relative min-h-screen bg-white"
     >
       <div className="flex items-center justify-center min-h-screen px-8 py-20">
-        
+
         <div className="w-full max-w-[1200px]">
           <AnimatedProjectCard
             gradientFrom="#8B5CF6"
             gradientTo="#06B6D4"
           >
-            {/* Changed bg-gray-900 to bg-white */}
             <div className="relative w-full overflow-hidden bg-white rounded-3xl" style={{ height: '85vh' }}>
               <Image
                 src="/intervyn-demo.png"

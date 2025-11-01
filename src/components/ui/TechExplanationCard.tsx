@@ -1,17 +1,5 @@
 'use client';
 
-/**
- * Tech Explanation Card Component
- *
- * Displays tech stack information with icon, title, description
- * Used in the scroll-synchronized tech stack section
- *
- * Features:
- * - Gradient accent border
- * - Progress indicator showing current tech in sequence
- * - Typography following design system
- */
-
 import { motion } from 'framer-motion';
 
 export interface TechExplanationCardProps {
@@ -33,9 +21,7 @@ export default function TechExplanationCard({
 }: TechExplanationCardProps) {
   return (
     <div className="relative">
-      {/* Main card content */}
       <div className="space-y-6">
-        {/* Icon with gradient background */}
         <motion.div
           className="w-20 h-20 rounded-2xl flex items-center justify-center text-4xl"
           style={{
@@ -48,17 +34,14 @@ export default function TechExplanationCard({
           {icon}
         </motion.div>
 
-        {/* Title */}
         <h3 className="text-4xl md:text-5xl font-bold text-gray-900">
           {title}
         </h3>
 
-        {/* Description */}
         <p className="text-lg text-gray-600 leading-relaxed">
           {description}
         </p>
 
-        {/* Progress indicator */}
         <div className="flex items-center gap-2 pt-4">
           {Array.from({ length: totalCount }).map((_, index) => (
             <motion.div
@@ -81,7 +64,6 @@ export default function TechExplanationCard({
           ))}
         </div>
 
-        {/* Counter text */}
         <p className="text-sm text-gray-400 font-medium">
           {currentIndex + 1} of {totalCount}
         </p>

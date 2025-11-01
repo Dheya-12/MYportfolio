@@ -1,18 +1,5 @@
 'use client';
 
-/**
- * Emergence Text Component
- *
- * Text that emerges from particle swarms following simple flocking rules
- * Combined with Perlin noise displacement field for organic distortion
- *
- * Demonstrates:
- * - Emergence theory (complex behavior from simple rules)
- * - Particle systems
- * - Perlin noise (matching the WebGL gradient aesthetic)
- * - Cursor-based magnetic field physics
- */
-
 import { useEffect, useRef, useState } from 'react';
 
 interface Particle {
@@ -44,7 +31,6 @@ export default function EmergenceText({
   const mouseRef = useRef({ x: 0, y: 0 });
   const [isComplete, setIsComplete] = useState(false);
 
-  // Perlin noise implementation (simplified)
   const noise2D = (x: number, y: number): number => {
     const X = Math.floor(x) & 255;
     const Y = Math.floor(y) & 255;
@@ -75,7 +61,6 @@ export default function EmergenceText({
     const textCtx = textCanvas.getContext('2d');
     if (!ctx || !textCtx) return;
 
-    // Set canvas size
     const dpr = window.devicePixelRatio || 1;
     const rect = canvas.getBoundingClientRect();
     canvas.width = rect.width * dpr;
@@ -86,28 +71,24 @@ export default function EmergenceText({
     ctx.scale(dpr, dpr);
     textCtx.scale(dpr, dpr);
 
-    // Draw text to extract particle positions
     textCtx.font = `bold ${fontSize}px ${getComputedStyle(document.documentElement).getPropertyValue('font-family')}`;
     textCtx.textAlign = 'center';
     textCtx.textBaseline = 'middle';
     textCtx.fillStyle = 'white';
     textCtx.fillText(text, rect.width / 2, rect.height / 2);
 
-    // Extract pixels where text exists
     const imageData = textCtx.getImageData(0, 0, textCanvas.width, textCanvas.height);
     const targetPoints: { x: number; y: number }[] = [];
 
-    // Sample every 4 pixels for performance
     for (let y = 0; y < imageData.height; y += 4) {
       for (let x = 0; x < imageData.width; x += 4) {
         const i = (y * imageData.width + x) * 4;
-        if (imageData.data[i + 3] > 128) { // Alpha > 128
+        if (imageData.data[i + 3] > 128) {
           targetPoints.push({ x: x / dpr, y: y / dpr });
         }
       }
     }
 
-    // Create particles starting from random positions
     const particles: Particle[] = targetPoints.map((target) => ({
       x: rect.width / 2 + (Math.random() - 0.5) * rect.width,
       y: rect.height / 2 + (Math.random() - 0.5) * rect.height,
@@ -121,7 +102,6 @@ export default function EmergenceText({
     particlesRef.current = particles;
     startTimeRef.current = performance.now();
 
-    // Mouse tracking
     const handleMouseMove = (e: MouseEvent) => {
       const rect = canvas.getBoundingClientRect();
       mouseRef.current = {
@@ -131,7 +111,6 @@ export default function EmergenceText({
     };
     window.addEventListener('mousemove', handleMouseMove);
 
-    // Animation loop
     const animate = (currentTime: number) => {
       const elapsed = (currentTime - startTimeRef.current) / 1000;
 
@@ -140,9 +119,7 @@ export default function EmergenceText({
       let allSettled = true;
 
       particles.forEach((p, i) => {
-        // Emergence phase (0-3 seconds): Particles converge to targets
         if (elapsed < 3) {
-          // Attraction to target
           const dx = p.targetX - p.x;
           const dy = p.targetY - p.y;
           const dist = Math.sqrt(dx * dx + dy * dy);
@@ -150,12 +127,10 @@ export default function EmergenceText({
           if (dist > 1) {
             allSettled = false;
 
-            // Spring force toward target
             const springForce = 0.15;
             p.vx += dx * springForce;
             p.vy += dy * springForce;
 
-            // Separation from neighbors (flocking behavior)
             particles.forEach((other, j) => {
               if (i !== j) {
                 const odx = p.x - other.x;
@@ -170,53 +145,43 @@ export default function EmergenceText({
               }
             });
 
-            // Damping
             p.vx *= 0.85;
             p.vy *= 0.85;
 
-            // Update position
             p.x += p.vx;
             p.y += p.vy;
           } else {
             p.settled = true;
           }
         } else {
-          // Post-emergence: Perlin noise displacement + magnetic field
           p.settled = true;
 
-          // Perlin noise displacement (flowing organic movement)
           const noiseScale = 0.01;
           const noiseStrength = 3;
           const noiseX = noise2D(p.targetX * noiseScale + elapsed * 0.3, p.targetY * noiseScale);
           const noiseY = noise2D(p.targetX * noiseScale, p.targetY * noiseScale + elapsed * 0.3);
 
-          // Cursor magnetic field (inverse square law)
           const mdx = p.targetX - mouseRef.current.x;
           const mdy = p.targetY - mouseRef.current.y;
           const mdist = Math.sqrt(mdx * mdx + mdy * mdy);
           const magneticStrength = 50;
           const magneticInfluence = mdist > 0 ? magneticStrength / (mdist * mdist) : 0;
 
-          // Combine displacements
           p.x = p.targetX + (noiseX - 0.5) * noiseStrength * 2 + (mdx / mdist) * magneticInfluence * 100;
           p.y = p.targetY + (noiseY - 0.5) * noiseStrength * 2 + (mdy / mdist) * magneticInfluence * 100;
         }
 
-        // Render particle
         const alpha = p.settled ? 1 : 0.6;
         const size = p.settled ? 2 : 1.5;
 
-        // Gradient color based on position (matching WebGL gradient)
         const colorPhase = (p.x / rect.width + elapsed * 0.1) % 1;
         let r, g, b;
         if (colorPhase < 0.5) {
-          // Pink to Cyan transition
           const t = colorPhase * 2;
           r = Math.floor(232 * (1 - t) + 19 * t);
           g = Math.floor(93 * (1 - t) + 255 * t);
           b = Math.floor(154 * (1 - t) + 227 * t);
         } else {
-          // Cyan to Purple transition
           const t = (colorPhase - 0.5) * 2;
           r = Math.floor(19 * (1 - t) + 107 * t);
           g = Math.floor(255 * (1 - t) + 47 * t);

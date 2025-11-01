@@ -13,19 +13,13 @@ export default function IntervynDetailSection() {
 
   return (
     <>
-      {/* ============================================
-          INTERVYN HERO SECTION WITH GRADIENT
-          Matches main hero design language
-          ============================================ */}
       <section className="relative overflow-hidden">
-        {/* Subtle animated gradient background - 30% opacity */}
         <div className="absolute inset-0 z-0">
           <AnimatedGradient
             config={COMPLETE_CONFIG}
             opacity={0.3}
             zIndex={0}
           />
-          {/* Gradient overlay for softer effect */}
           <div
             className="absolute inset-0"
             style={{
@@ -34,13 +28,9 @@ export default function IntervynDetailSection() {
           />
         </div>
 
-        {/* Content container */}
         <div className="relative z-10 px-8 py-16">
           <div className="max-w-[1200px] mx-auto">
 
-            {/* ============================================
-                SVG STROKE TITLE - MATCHING HERO STYLE
-                ============================================ */}
             <div ref={heroRef} className="relative">
               <svg
                 className="w-full h-auto"
@@ -93,7 +83,6 @@ export default function IntervynDetailSection() {
                 </filter>
               </defs>
 
-              {/* Stroke text */}
               <motion.text
                 x="500"
                 y="50"
@@ -119,7 +108,6 @@ export default function IntervynDetailSection() {
                 INTERVYN
               </motion.text>
 
-              {/* Fill text */}
               <motion.text
                 x="500"
                 y="50"
@@ -136,7 +124,6 @@ export default function IntervynDetailSection() {
               </motion.text>
             </svg>
 
-            {/* Subtitle with glass morphism */}
             <motion.div
               className="flex justify-center mt-6"
               initial={{ opacity: 0, y: 20 }}
@@ -144,14 +131,12 @@ export default function IntervynDetailSection() {
               transition={{ duration: 0.8, delay: 2.5 }}
             >
               <div className="relative">
-                {/* Glow effect */}
                 <div
                   className="absolute inset-0 blur-xl opacity-60"
                   style={{
                     background: 'radial-gradient(circle, rgba(19, 255, 227, 0.4) 0%, rgba(107, 47, 216, 0.3) 100%)',
                   }}
                 />
-                {/* Glass card */}
                 <div className="relative backdrop-blur-md bg-white/30 border border-white/40 rounded-2xl px-8 py-4 shadow-2xl">
                   <p className="text-center text-lg sm:text-xl font-medium bg-gradient-to-r from-gray-900 via-gray-700 to-gray-900 bg-clip-text text-transparent">
                     Real-Time AI Interview Platform
@@ -160,7 +145,6 @@ export default function IntervynDetailSection() {
               </div>
             </motion.div>
 
-            {/* Decorative accent line */}
             <motion.div
               className="flex justify-center mt-8 mb-12"
               initial={{ scaleX: 0, opacity: 0 }}
@@ -179,10 +163,6 @@ export default function IntervynDetailSection() {
         </div>
       </section>
 
-      {/* ============================================
-          SCROLL-SYNC INTERVYN SHOWCASE
-          All 6 sections including Tech Stack
-          ============================================ */}
       <ScrollSyncTechStack />
     </>
   );
