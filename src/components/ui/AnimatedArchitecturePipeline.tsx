@@ -246,7 +246,7 @@ export default function AnimatedArchitecturePipeline({
       >
         <svg className="w-full h-full" viewBox="0 0 1400 800">
           <text x="700" y="80" textAnchor="middle" fontSize="48" fontWeight="600" fill="#1f2937">
-            How Intervyn's Voice-to-Voice Pipeline Works
+            How Intervyn&apos;s Voice-to-Voice Pipeline Works
           </text>
 
           <text x="700" y="180" textAnchor="middle" fontSize="32" fontWeight="500" fill="#374151">

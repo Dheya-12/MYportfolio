@@ -13,7 +13,7 @@ interface PathAnimation {
   initial: { pathLength: number; opacity: number };
   animate: { pathLength: number; opacity: number };
   transition: {
-    pathLength: { duration: number; ease: number[] | [number, number, number, number] };
+    pathLength: { duration: number; ease: [number, number, number, number] };
     opacity: { duration: number };
   };
 }
@@ -42,7 +42,7 @@ export default function IntervynVisualization({ type, gradient, icon }: Intervyn
     initial: { pathLength: 0, opacity: 0 },
     animate: isInView ? { pathLength: 1, opacity: 1 } : { pathLength: 0, opacity: 0 },
     transition: {
-      pathLength: { duration: 3.0, ease: [0.4, 0, 0.2, 1] },
+      pathLength: { duration: 3.0, ease: [0.4, 0, 0.2, 1] as [number, number, number, number] },
       opacity: { duration: 0.3 },
     },
   };
